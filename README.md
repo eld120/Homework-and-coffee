@@ -1,1 +1,3 @@
-# Coffee-practice-with-cats
+# practice
+
+initial completed homework assignments in C
