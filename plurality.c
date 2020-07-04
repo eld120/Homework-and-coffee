@@ -1,27 +1,35 @@
 #include <cs50.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
-// Max number of candidates
-#define MAX 9
+#define MAX 9 // Max number of candidates
+int z;
+int i;
+int k = 0;
+int ceiling = 0;
+int counter = 0;
+int candidate_count;// Number of candidates
 
-// Candidates have name and vote count
-typedef struct candidates
+typedef struct // Candidates have name and vote count
 {
     string name;
     int votes;
 }
 candidate;
+
+typedef struct
+{
+    string name;
+    int votes;
+}
+ballot;
+
 candidate candidates[MAX]; // Array of candidates
-int candidate_count; // Number of candidates
-string name;
-int i;
+ballot ballots[75]; // Array of ballots
 
 // Function prototypes
 bool vote(string name);
 void print_winner(void);
-
 
 int main(int argc, string argv[])
 {
@@ -50,65 +58,64 @@ int main(int argc, string argv[])
     // Loop over all voters
     for (i = 0; i < voter_count; i++)
     {
-        name = get_string("Vote: ");
-       printf("%s", candidates[0].name);
-       printf("%i\n", candidates[0].votes);
-       printf("%s", candidates[1].name);
-       printf("%i\n", candidates[1].votes);
-       printf("%i", candidates[2].votes);
-        printf("%s\n", candidates[2].name);
-        printf("%s", name);
+        string name = get_string("Vote: ");
+
         // Check for invalid vote
-       // if (vote(name) == false)
-       // {
-       //     printf("Invalid vote.\n");
-       // }
-        for (int k = 0; k <= candidate_count; k++)
+        if (!vote(name))
         {
-            if (candidates[k].name == name)
-                {
-                    candidates[k].votes = candidates[k].votes + 1;
-                }
+            printf("Invalid vote.\n");
         }
-
-
-
     }
-
     // Display winner of election
-   // print_winner();
+    print_winner();
 }
- // Update vote totals given a new vote
-bool vote()
+
+// Update vote totals given a new vote
+bool vote(string name)
 {
-
-
-
-    for (i = 0; i <= candidate_count; i++)
-        {
-            if (name == candidates[i].name)
-            {
-
-                return true;
-            }
-
-        }
-        return false;
-
-
-}
-    // Print the winner (or winners) of the election
-void print_winner(void)
+    // TODO
+    for (k = 0; k <  candidate_count; k++)
     {
-        for (i = 0; i == candidate_count; i++)
-            if(candidates[i].votes)
-            {
-
-            }
-       // return;
+        if (strcmp(name, candidates[k].name) == 0)
+        {
+            candidates[k].votes++;
+            return true;
+        }
     }
+    return false;
+}
+//new struct to count winners
 
 
-
-
-
+// Print the winner (or winners) of the election
+void print_winner(void)
+{
+    //while
+    
+    for (i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes >= ceiling)
+        {
+            ceiling = candidates[i].votes;   
+        } 
+            
+    }
+    for (i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes == ceiling)
+        {
+            ballots[k].name = candidates[i].name;
+            ballots[k].votes = candidates[i].votes;
+            k++;
+            counter++;
+        }
+    }
+    for (i = 0; i < counter; i++)
+    {
+        if (ballots[i].votes == ceiling)
+        {
+            printf("%s\n", ballots[i].name);
+        }
+    }
+    return;
+}
