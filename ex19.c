@@ -10,11 +10,19 @@
 int main(void)
 {
     int c;
-
+    int last = 0;
     while ((c = getchar()) != EOF)
     {
-        putchar(c);
-    }
 
+        if (c == ' ' && last == ' ')
+        {
+            ;
+        }
+        else{
+            putchar(c);
+        }
+        last = c;
+    }
+    printf("\n");
     return 0;
 }
